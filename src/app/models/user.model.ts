@@ -1,5 +1,6 @@
 import { Iuser } from './../interfaces/user.interface';
 import { model, Schema } from "mongoose";
+import validator from 'validator';
 
 const userSchema = new Schema<Iuser>(
     {
@@ -16,14 +17,25 @@ const userSchema = new Schema<Iuser>(
             trim: true
         },
         age: {
-            type : Number,
-            required : true,
+            type: Number,
+            required: true,
             min: [18, "must be at least 18, got {VALUE}"],
-            max : 60
+            max: 60
         },
         email: {
             type: String,
-            unique :[true, 'duplicate email not allow'],
+            unique: [true, 'duplicate email not allow'],
+
+            // validate: {
+            //     validator:
+            //         function (value: string) {
+            //             return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value)
+            //         },
+            //     message: function (props) {
+            //         return `${props.value} is a invalid Email`
+            //     }
+            // },
+            validate: [validator.isEmail],
             required: true,
             lowercase: true,
             trim: true
@@ -34,9 +46,9 @@ const userSchema = new Schema<Iuser>(
         },
         role: {
             type: String,
-            uppercase : true,
+            uppercase: true,
             enum: {
-                values : ['USER', 'ADMIN'],
+                values: ['USER', 'ADMIN'],
                 message: "role is not valid, got {VALUE}"
             },
             default: 'USER'
