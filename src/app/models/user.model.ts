@@ -1,6 +1,19 @@
-import { Iuser } from './../interfaces/user.interface';
+import { IAddress, Iuser } from './../interfaces/user.interface';
 import { model, Schema } from "mongoose";
 import validator from 'validator';
+
+//created sub-schema for every data, which is nested in obj --> {key : type},
+//  imported them from interface.ts
+const addressSchema = new Schema<IAddress>({
+    city: {
+        type: String,
+        required: [true, 'city is invalid']
+    },
+    street: String,
+    zip: Number,
+}, {
+    _id: false // forbidden for extra or 2nd _id creation
+})
 
 const userSchema = new Schema<Iuser>(
     {
@@ -54,7 +67,14 @@ const userSchema = new Schema<Iuser>(
             default: 'USER'
         },
 
-    }
+        //schema used as schemaType for proper type validation
+        address: {
+            type: addressSchema
+        }
+    }, {
+    versionKey: false,
+    timestamps: true
+}
 )
 
 export const User = model('User', userSchema)

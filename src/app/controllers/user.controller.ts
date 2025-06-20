@@ -14,16 +14,18 @@ const createUserZodSchema = z.object({
 })
 
 usersRoutes.post('/create', async (req: Request, res: Response) => {
-    // const body = req.body;
     try {
-        const body = await createUserZodSchema.parseAsync(req.body)
+        const body = req.body;
+        // const zodBody = await createUserZodSchema.parseAsync(req.body)
         const newUser = await User.create(body)
-        res.send(newUser)
-    } catch (error: any) {
+        res.send(newUser) 
+    } 
+    catch (error: any) {
         console.log('error', error);
         res.status(401).json({
-            success: false,
-            message : error.issues.map((i: z.ZodIssue) => i.message)
+            submited: false,
+            // message : error.issues.map((i: z.ZodIssue) => i.message)
+            message: error.errors
         })
     }
 })
