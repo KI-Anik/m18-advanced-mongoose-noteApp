@@ -15,6 +15,13 @@ const addressSchema = new Schema<IAddress>({
     _id: false // forbidden for extra or 2nd _id creation
 })
 
+/**
+ *  a class structure : const 'variable' = new ___({})
+ * line 25 'Schema' is a class. it's store under a variable name 'userSchema'
+ * 'class' always make his variable feel proud and give a separate identity,it's called 'instance/obj'
+ * now 'userSchema' is a 'instance/obj'
+ * 
+ * **/
 const userSchema = new Schema<Iuser>(
     {
         firstName: {
@@ -67,7 +74,7 @@ const userSchema = new Schema<Iuser>(
             default: 'USER'
         },
 
-        //schema used as schemaType for proper type validation
+        //schema (a class) used as schemaType for proper type validation
         address: {
             type: addressSchema
         }
@@ -77,4 +84,10 @@ const userSchema = new Schema<Iuser>(
 }
 )
 
-export const User = model('User', userSchema)
+//  model func always create a 'class'
+export const User = model('User', userSchema) 
+/**here model function store under a variabe name 'User'
+ * now 'User' is a class,
+ * userSchema is a instance/obj. it provide a blueprint/structure of a class ='User'
+ * 
+ * */

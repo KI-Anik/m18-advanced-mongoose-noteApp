@@ -3,7 +3,7 @@ import { Inotes } from "../interfaces/notes.interface";
 
 
 
- export const noteSchema = new Schema <Inotes>(
+export const noteSchema = new Schema<Inotes>(
     {
         title: { type: String, required: true, trim: true },
         content: { type: String, default: '' },
@@ -16,6 +16,11 @@ import { Inotes } from "../interfaces/notes.interface";
         tags: {
             label: { type: String, required: true },
             color: { type: String, default: 'green' }
+        },
+        userByRef: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required :true
         }
     },
     {

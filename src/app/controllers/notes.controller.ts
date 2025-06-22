@@ -27,7 +27,7 @@ notesRoutes.post('/create', async (req: Request, res: Response) => {
 
 //  get all
 notesRoutes.get('/', async (req: Request, res: Response) => {
-    const result = await Note.find()
+    const result = await Note.find().populate('userByRef')
 
     res.status(201).send(result)
 })
